@@ -1,4 +1,6 @@
-import { AppBar, Button, Grid, makeStyles, Toolbar, Typography } from '@material-ui/core'
+import {AppBar, Grid, makeStyles, Toolbar, Typography} from '@material-ui/core'
+import Wallet from "./Wallet";
+import {useState} from "react";
 
 const useStyles = makeStyles(theme => ({
     header: {
@@ -9,25 +11,24 @@ const useStyles = makeStyles(theme => ({
 
 export default () => {
     const classes = useStyles()
+    const [walletOpened, setWalletOpened] = useState(false)
 
     return (
         <>
             <AppBar className={classes.header} position="fixed" color="inherit">
                 <Toolbar>
-                    <Grid container justify="flex-start" alignItems="center">
+                    <Grid container justifyContent="flex-start" alignItems="center">
                         <Grid item>
                             <Typography>PoolParty</Typography>
                         </Grid>
                     </Grid>
 
-                    <Grid container justify="flex-end" alignItems="center">
-                        <Grid item>
-                            <Button variant="outlined" color="secondary">Connect Wallet</Button>
-                        </Grid>
+                    <Grid container justifyContent="flex-end" alignItems="center">
+                        <Wallet/>
                     </Grid>
                 </Toolbar>
             </AppBar>
-            <div className={classes.toolbar} />
+            <div className={classes.toolbar}/>
         </>
     )
 }
