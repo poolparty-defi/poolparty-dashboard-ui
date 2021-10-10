@@ -1,6 +1,8 @@
 import {Checkbox, Grid, MenuItem} from "@material-ui/core";
 import {SelectController} from "../Controls/SelectController";
 import useForm from "../../hooks/useForm";
+import {useContext} from "react";
+import MarketPlaceContext from "./MarketPlaceContext";
 
 const raffleOptions = [
     "Newly listed", "Stable", "Pending de-list", "De-listed", "Expires soon", "Ending", "Ended"
@@ -26,12 +28,13 @@ const filterInputs = {
     }
 }
 
-export const MarketPlaceFilterView = props => {
+export const MarketPlaceFilterView = () => {
     const {errors, inputEvents, values} = useForm(filterInputs);
+    const {setRaffleFilter, setRarityFilter, setPoolSizeFilter, setVerifiedFilter} = useContext(MarketPlaceContext)
 
-    props.setRaffle(values.raffle)
-    props.setRarity(values.rarity)
-    props.setPoolSize(values.poolSize)
+    setRaffleFilter(values.raffle)
+    setRarityFilter(values.rarity)
+    setPoolSizeFilter(values.poolSize)
 
     return (
         <Grid item container spacing={2} justifyContent="center">
@@ -74,7 +77,7 @@ export const MarketPlaceFilterView = props => {
             <Grid item>
                 <Checkbox
                     label="Verified"
-                    onChange={(event) => props.setVerified(event.target.checked)}
+                    onChange={(event) => setVerifiedFilter(event.target.checked)}
                 />
             </Grid>
         </Grid>

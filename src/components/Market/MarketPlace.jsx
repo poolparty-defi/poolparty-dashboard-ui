@@ -4,6 +4,7 @@ import {SearchBar} from "../Utility/SearchBar";
 import {useState} from "react";
 import {MarketPlaceFilterView} from "./MarketPlaceFilterView";
 import AssetCard from "../AssetCard/AssetCard";
+import MarketPlaceContext from "./MarketPlaceContext";
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -19,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const MarketPlace = () => {
-    const styles = useStyles()
+    const classes = useStyles()
     const [filterView, setFilterView] = useState(true)
     const toggleFilterView = () => setFilterView(!filterView)
 
-    /* These states represent filters. */
+    /* These states represent filters. TODO: use states to filter things out. */
     const [raffle, setRaffleFilter] = useState("Newly listed")
     const [rarity, setRarityFilter] = useState("Common")
     const [poolSize, setPoolSizeFilter] = useState("Empty")
@@ -31,49 +32,46 @@ const MarketPlace = () => {
     /* End of filter states. */
 
     return (
-        <Grid container direction="column">
-            <Grid container spacing={2} direction="row" className={styles.gutterBottom}>
-                <Grid item>
-                    <Button className={styles.button} color="primary" variant="contained">List an NFT</Button>
-                </Grid>
-                <Grid item className={styles.searchBar}>
-                    <SearchBar/>
-                </Grid>
-                <Hidden smDown>
+        <MarketPlaceContext.Provider value={{setRaffleFilter, setRarityFilter, setPoolSizeFilter, setVerifiedFilter}}>
+            <Grid container direction="column">
+                <Grid container spacing={2} direction="row" className={classes.gutterBottom}>
                     <Grid item>
-                        <Button className={styles.button} color="primary" variant="contained">Newest</Button>
+                        <Button className={classes.button} color="primary" variant="contained">List an NFT</Button>
                     </Grid>
-                    <Grid item>
-                        <Button className={styles.button} color="primary" variant="contained">Most Popular</Button>
+                    <Grid item className={classes.searchBar}>
+                        <SearchBar/>
                     </Grid>
-                    <Grid item>
-                        <Button className={styles.button} color="primary" variant="contained">Most expensive</Button>
-                    </Grid>
-                </Hidden>
-                <Grid item>
-                    <IconButton onClick={toggleFilterView} size="small"><FilterList/></IconButton>
-                </Grid>
-            </Grid>
-            <Collapse in={!filterView}>
-                <Grid container spacing={2} className={styles.gutterBottom}>
-                    <MarketPlaceFilterView
-                        setRaffle={setRaffleFilter}
-                        setRarity={setRarityFilter}
-                        setPoolSize={setPoolSizeFilter}
-                        setVerified={setVerifiedFilter}
-                    />
-                </Grid>
-            </Collapse>
-            <Grid container spacing={2}>
-                {
-                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((index) => (
-                        <Grid item xs={3} key={index}>
-                            <AssetCard title="Some Title" subheader="Some sub header"/>
+                    <Hidden smDown>
+                        <Grid item>
+                            <Button className={classes.button} color="primary" variant="contained">Newest</Button>
                         </Grid>
-                    ))
-                }
+                        <Grid item>
+                            <Button className={classes.button} color="primary" variant="contained">Most Popular</Button>
+                        </Grid>
+                        <Grid item>
+                            <Button className={classes.button} color="primary" variant="contained">Most expensive</Button>
+                        </Grid>
+                    </Hidden>
+                    <Grid item>
+                        <IconButton onClick={toggleFilterView} size="small"><FilterList/></IconButton>
+                    </Grid>
+                </Grid>
+                <Collapse in={!filterView}>
+                    <Grid container spacing={2} className={classes.gutterBottom}>
+                        <MarketPlaceFilterView/>
+                    </Grid>
+                </Collapse>
+                <Grid container spacing={2}>
+                    {
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((index) => (
+                            <Grid item xs={3} key={index}>
+                                <AssetCard title="Some Title" subheader="Some sub header"/>
+                            </Grid>
+                        ))
+                    }
+                </Grid>
             </Grid>
-        </Grid>
+        </MarketPlaceContext.Provider>
     )
 }
 
