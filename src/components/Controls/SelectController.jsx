@@ -1,4 +1,4 @@
-import {FormControl, FormHelperText, InputLabel, MenuItem, Select} from "@material-ui/core";
+import {FormControl, FormHelperText, InputLabel, Select} from "@material-ui/core";
 
 export const SelectController = props => {
     const {errors, options, name, label, variant, className} = props;

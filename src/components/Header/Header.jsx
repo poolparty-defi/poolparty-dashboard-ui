@@ -1,6 +1,5 @@
 import {AppBar, Grid, makeStyles, Toolbar, Typography} from '@material-ui/core'
-import Wallet from "./Wallet";
-import {useState} from "react";
+import Wallet from "../Wallet/Wallet";
 
 const useStyles = makeStyles(theme => ({
     header: {
@@ -11,7 +10,6 @@ const useStyles = makeStyles(theme => ({
 
 export default () => {
     const classes = useStyles()
-    const [walletOpened, setWalletOpened] = useState(false)
 
     return (
         <>
