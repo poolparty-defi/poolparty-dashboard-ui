@@ -49,8 +49,6 @@ const useWallet = () => {
     const openWalletsModal = async () => {
 
         try {
-            if (!web3Modal)
-                initWeb3Modal()
             const connection = await web3Modal.connect()
             provider = new Web3(connection)
 
@@ -63,6 +61,9 @@ const useWallet = () => {
             // log if needed.
         }
     }
+
+    if (!web3Modal)
+        initWeb3Modal()
 
     return {
         connected,

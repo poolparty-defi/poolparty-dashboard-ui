@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     toolbar: theme.mixins.toolbar,
 }))
 
-export default () => {
+const Header = () => {
     const classes = useStyles()
 
     return (
@@ -30,3 +30,5 @@ export default () => {
         </>
     )
 }
+
+export default Header

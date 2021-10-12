@@ -104,7 +104,7 @@ const validate = (id, values, state, setState) => {
     // check that the input matches another input
     if (rules.hasOwnProperty("matches")) {
         if (!state.inputs.hasOwnProperty(rules.matches.value)) {
-            throw `Input with name of ${rules.matches.value} was not found to check against`
+            throw new Error(`Input with name of ${rules.matches.value} was not found to check against`)
         }
 
         const passed = values[id] === values[rules.matches.value];
@@ -151,11 +151,11 @@ const useForm = inputs => {
 
     const onChange = e => {
         if (!e.target.name) {
-            throw "Invalid input configuration - please provide the name attribute"
+            throw new Error("Invalid input configuration - please provide the name attribute")
         }
 
         if (!values.hasOwnProperty(e.target.name)) {
-            throw `Could not find input with name of ${e.target.name}`
+            throw new Error(`Could not find input with name of ${e.target.name}`)
         }
 
         let val = e.target.value
@@ -179,6 +179,7 @@ const useForm = inputs => {
         setValues({...values, [e.target.name]: val})
     }
 
+
     const handleSubmit = (callback = Function()) => e => {
         e.preventDefault();
 
@@ -199,11 +200,11 @@ const useForm = inputs => {
 
     const onBlur = e => {
         if (!e.target.name) {
-            throw "Invalid input configuration - please provide the name attribute"
+            throw new Error("Invalid input configuration - please provide the name attribute")
         }
 
         if (!state.inputs.hasOwnProperty(e.target.name)) {
-            throw `Could not find input with name of ${e.target.name}`
+            throw new Error(`Could not find input with name of ${e.target.name}`)
         }
 
         if (!state.inputs[e.target.name].hasOwnProperty("rules")) {
